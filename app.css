@@ -1,0 +1,19 @@
+#tooltip {
+    background-color: rgba(187, 187, 187, 0.7);
+    border-radius: 5px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+}
+  
+body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+}
+  
+th { font-size: 14px; }
+td { font-size: 12px; }
+label { font-size: 12px; }
+.dataTables_info {font-size: 12px;}
+.dataTables_paginate {font-size: 12px;}

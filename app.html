@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="app.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <svg id="plot2"></svg>
+      </div>
+      <div class="col-md-6">
+        <svg id="plot1"></svg>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6">
+
+        <table id='table' class="display compact"></table>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <img class="img-responsive" style="width: 100%" 
+        id="theImg" src="ANTI-INFECTIVES-RGB_200pc.png" />
+
+      </div>
+
+    </div>
+
+      
+      
+
+
+  </div>
+      
+
+
+  
+  <style>
+
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="app.js"></script>
+  <script>
+
+    var tooltip = d3.select('body').append('div').attr('id', 'tooltip');
+
+    //select the columns to plot
+    let X1='logFC';
+    let Y1='log_PValue';
+    let X2='logCPM';
+    let Y2='logFC'; 
+
+    Promise.all([d3.csv('indata.csv')]).then(function(files) {
+      
+      //use all the columns in the file
+      var columns = files[0].columns;
+      console.log('File Columns', columns);
+      //add data to the table
+      tabulate(files[0], columns, '#table');
+
+      //we expect to have 3 fix columns:
+      //Gene_acc -> a unique integer identifiers, hidden in the 
+      //datatable but used for search
+      //Gene_id -> gene id or name, present in the tooltip
+      //Desc -> Extended info, present in the tooltip
+      let columnDefs = [
+        {"targets": columns.indexOf('Gene_acc') , 
+        "visible": false, "searchable": true},
+
+        {"targets": columns.indexOf('Gene_id') , 
+        "searchable": false },
+
+        {"targets": columns.indexOf('Desc'), 
+        "searchable": true },
+      ];
+
+      //for all the other columns, if contain a number is
+      //rounded to 2nd decimal
+      columns.forEach(function(d){
+        if( ['Gene_acc','Gene_id','Desc'].indexOf(d) == -1 ) {
+          columnDefs.push(
+            {"targets": columns.indexOf(d), "searchable": false, 
+            render: function(data,type,raw){return numberParser(data);}}
+          );
+        }
+      })
+
+      //start the datatable
+      var table = $('#table').DataTable(
+        {
+          
+          "search": {"regex": true},
+          "lengthMenu": [[-1, 5, 10, 20, 25, 50, 100 ], 
+          [ 'Show all', '5 rows', '10 rows', '20 rows', '25 rows', '50 rows', '100 rows' ]],
+          "pageLength": 5,
+          "scrollX": true,
+          "columnDefs": columnDefs,
+          
+        }
+      );
+      
+      //add the plots
+      scaterPlot(files[0], "plot1", 500, 350, "plot_a", X1, Y1, table);
+      scaterPlot(files[0], "plot2", 500, 350, "plot_b", X2, Y2, table);
+      
+      //add the listner to the table rows
+      $('#table tbody').on('mouseover', 'tr', function () {
+        //console.log('mouseover');
+        var data = table.row( this ).data();
+        //console.log('data[0]', data);
+        var gene_acc = data[0]
+        
+        var selector = '#'+gene_acc;
+        //console.log('selector', selector);
+        d3.selectAll(selector).style("stroke",'red').attr("stroke-width",'5').style("opacity", 1).raise();
+        //console.log(d3.select(selector));
+      });
+
+      $('#table tbody').on('mouseout', 'tr', function () {
+        //console.log('mouseout');
+        var data = table.row( this ).data();
+        var gene_acc = data[0]
+        var selector = '#'+gene_acc;
+        d3.selectAll(selector).style("stroke",'').attr("stroke-width",'').style("opacity", 0.5);
+        //console.log('data[0]', data);
+      });
+
+
+
+
+    });
+
+    
+
+
+
+  </script>
+</body>
+</html>
