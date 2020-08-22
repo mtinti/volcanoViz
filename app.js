@@ -25,7 +25,7 @@ var tabulate = function makeTable(data, columns, table_id) {
     var rows = tbody.selectAll('tr')
     .data(data)
     .enter()
-    .append('tr').attr('id',function (d){'t_'+'aa'+d.value+'aa'});
+    .append('tr');
         
     var cells = rows.selectAll('td')
     .data(function(row) {return columns.map(function (column) {
@@ -43,6 +43,52 @@ var tabulate = function makeTable(data, columns, table_id) {
         
     return table;
 }
+//trying to move a selected row on the top of the 
+//datatable page... still to figure it out
+//https://stackoverflow.com/questions/58472760
+//https://stackoverflow.com/questions/30712227/
+//https://datatables.net/forums/discussion/comment/39808/#Comment_39808
+//https://stackoverflow.com/questions/30712227/
+function moveRow(row, table) {
+    //var index = table.row(row).index();
+    //alert(index)
+    //var data1 = table.row(index).data();
+    //console.log(data1);
+    //data1[0] = -data1[0];
+    //console.log(data1[0]);
+    //table.row(index).data(data1).index(0).draw();
+    //var currentPage = table.page();
+    //var index = table.row(row).index();
+    //var row_data = table.row(index).data();
+    //var rowCount = table.data().length-1;
+    //var tempRow;
+
+    //row.remove()
+    //.draw();
+    //table.row.add(row_data).draw();
+
+    //for (var i=rowCount;i>0;i--) {
+    //    tempRow = table.row(i-1).data();
+    //    table.row(i).data(tempRow);
+    //    table.row(i-1).data(row_data);
+    //}
+    //table.page(currentPage).draw(false);  
+    //var row_data = table.row(index).data();
+    //var dt = table.api();
+    //var aiDisplayMaster = table.settings()['aiDisplayMaster'];
+    //var row = table.settings()['aiDisplayMaster'][index]
+    //aiDisplayMaster.splice(index, 1)
+    //aiDisplayMaster.splice(1, 0, row);
+    //dt.draw(false);
+
+
+
+
+
+
+}
+
+
 
 
 //function to make a scatterplot
@@ -199,6 +245,8 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     .style("fill", "#4292c6")
     .on('mouseover', d => {
 
+
+
         //this is too resource intensive for thousends of dots
         //consider to uncomments for small plots
         
@@ -208,6 +256,12 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         //.duration(200)
         //.style("opacity", 0.2);
         //intable.row("your selector here")
+        
+        //var row = intable.row('#'+'row_aa'+d['Gene_acc']+'aa');
+        //moveRow(row,intable);
+        
+        //console.log('row',row.data());
+        //intable.row.add(row.data()).draw()
         //select the gene and show tooltip
         var selector = 'aa'+d['Gene_acc']+'aa';
         d3.selectAll("circle[id*='"+selector+"']")
