@@ -25,7 +25,7 @@ var tabulate = function makeTable(data, columns, table_id) {
     var rows = tbody.selectAll('tr')
     .data(data)
     .enter()
-    .append('tr');
+    .append('tr').attr('id',function (d){'t_'+'aa'+d.value+'aa'});
         
     var cells = rows.selectAll('td')
     .data(function(row) {return columns.map(function (column) {
@@ -124,12 +124,42 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
 
     //tring to add more space to fit the circles 
     //at the boders -- needs rethinking -- 
-    xExtent[0]=xExtent[0]-xExtent[0]*0.1
-    xExtent[1]=xExtent[1]+xExtent[1]*0.1
-    yExtent[0]=yExtent[0]-yExtent[0]*0.1
-    yExtent[1]=yExtent[1]+yExtent[1]*0.1
-
+    console.log('before: xExtent',xExtent,'yExtent',yExtent);
+    //var XextentMax = Math.max.apply(null, xExtent.map(Math.abs));
+    //var YextentMax = Math.max.apply(null, yExtent.map(Math.abs));
     
+    if (xExtent[0] < 0){
+        xExtent[0] = xExtent[0] - (xExtent[0]*0.05*-1)
+    }
+    else {
+        xExtent[0] = xExtent[0] + xExtent[0]*0.05
+    }
+
+    if (xExtent[1] < 0){
+        xExtent[1] = xExtent[1] - (xExtent[1]*0.05*-1)
+    }
+    else {
+        xExtent[1] = xExtent[1] + xExtent[1]*0.05
+    }
+
+
+    if (yExtent[0] < 0){
+        yExtent[0] = yExtent[0] - (yExtent[0]*0.05*-1)
+    }
+    else {
+        yExtent[0] = yExtent[0] + yExtent[0]*0.05
+    }
+
+    if (yExtent[1] < 0){
+        yExtent[1] = yExtent[1] - (yExtent[1]*0.05*-1)
+    }
+    else {
+        yExtent[1] = yExtent[1] + yExtent[1]*0.05
+    }
+
+
+    console.log('after: xExtent',xExtent,'yExtent',yExtent);
+
     x.domain(xExtent).nice();
     y.domain(yExtent).nice();
 
@@ -171,12 +201,13 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
 
         //this is too resource intensive for thousends of dots
         //consider to uncomments for small plots
+        
         //d3.selectAll("circle")
         //.attr('stroke-width',0)
         //.transition()
         //.duration(200)
         //.style("opacity", 0.2);
-
+        //intable.row("your selector here")
         //select the gene and show tooltip
         var selector = 'aa'+d['Gene_acc']+'aa';
         d3.selectAll("circle[id*='"+selector+"']")
@@ -192,8 +223,8 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             '<strong>' + x_col + '</strong>: ' + d3.format('.2f')(d[x_col])+ '<br/>' +
             '<strong>' + y_col + '</strong>: ' + d3.format('.2f')(d[y_col])
         )
-        .style('left', `${d3.event.pageX + 2}px`)
-        .style('top', `${d3.event.pageY - 18}px`);
+        .style('left', `${d3.event.pageX + 10}px`)
+        .style('top', `${d3.event.pageY - -20}px`);
     })
     .on('mouseout', d => {
 
@@ -203,6 +234,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         //        .transition()
         //        .duration(1)
         //        .style("opacity", 1);
+
         var selector = 'aa'+d['Gene_acc']+'aa';
         d3.selectAll("circle[id*='"+selector+"']")
         .style("stroke",'')

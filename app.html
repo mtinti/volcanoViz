@@ -5,12 +5,29 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="////cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="app.css">
 </head>
 
 <body>
 
+
+
+  <main role="main">
+          <!-- Main jumbotron for a primary marketing message or call to action -->
+          <div class="jumbotron" style="height:200px">
+            <div class="container">
+              <h3 class="display-3">Hello, world!</h3>
+              <p>This is a template</p>
+            </div>
+          </div>
+
   <div class="container">
+
+ 
+
+    
+
     <div class="row">
       <div class="col-md-6">
         <svg id="plot2"></svg>
@@ -42,6 +59,7 @@
 
 
   </div>
+</main>
       
 
 
@@ -53,6 +71,11 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script> 
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script> 
+
+
+
   <script src="https://d3js.org/d3.v5.js"></script>
   <script src="app.js"></script>
   <script>
@@ -103,13 +126,19 @@
       //start the datatable
       var table = $('#table').DataTable(
         {
-          
+          "dom": 'frtipB',
+          "buttons": ['csv'],
           "search": {"regex": true},
           "lengthMenu": [[-1, 5, 10, 20, 25, 50, 100 ], 
           [ 'Show all', '5 rows', '10 rows', '20 rows', '25 rows', '50 rows', '100 rows' ]],
           "pageLength": 5,
           "scrollX": true,
           "columnDefs": columnDefs,
+          //https://stackoverflow.com/questions/38575079/
+          'createdRow': function(nRow, aData, iDataIndex) {
+            //console.log('aData',aData);
+            $(nRow).attr('id', 'row_' + aData[0]); // or if you prefer 'row' + aData.aid + aData.bid
+          }
           
         }
       );
@@ -129,6 +158,9 @@
         //console.log('selector', selector);
         d3.selectAll(selector).style("stroke",'red').attr("stroke-width",'5').style("opacity", 1).raise();
         //console.log(d3.select(selector));
+        //var id = table.row( this ).id();
+        //console.log('row id',id);
+
       });
 
       $('#table tbody').on('mouseout', 'tr', function () {
