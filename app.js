@@ -279,6 +279,8 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         )
         .style('left', `${d3.event.pageX + 10}px`)
         .style('top', `${d3.event.pageY - -20}px`);
+        
+
     })
     .on('mouseout', d => {
 
@@ -298,6 +300,25 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         tooltip.transition()
         .duration(400)
         .style('opacity', 0);
+    }).on('click', d=>{
+        var selection = d3.select("#name_" +unique_id+ d['Gene_acc'])
+        if (selection.empty()){
+            console.log(selection);
+            //this part would add the gene name to the circle
+            //buth needs to respond to brush as well... another time
+            //let gene_name =svg.append("text").attr("x", x(d[x_col]))
+            //.attr("y", y(d[y_col])-10)
+            //.attr("id", "name_" +unique_id+ d['Gene_acc'])
+            //.style("text-anchor", "middle")
+            //.attr("class","gene_name")
+            //.text(d['Gene_id']);
+
+        }
+        else{
+            //selection.remove()
+        }
+
+
     });
 
     // x axis
