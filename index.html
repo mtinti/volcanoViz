@@ -3,9 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
+  <title>VolcanoViz</title>
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" type="text/css" href="////cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.12.0/css/bootstrap-tour-standalone.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.12.0/css/bootstrap-tour.css">
   <link rel="stylesheet" type="text/css" href="app.css">
 </head>
 
@@ -60,15 +63,16 @@
 
   </style>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.12.0/js/bootstrap-tour-standalone.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script> 
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script> 
-
-
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.12.0/js/bootstrap-tour.js"></script> 
   <script src="https://d3js.org/d3.v5.js"></script>
   <script src="app.js"></script>
+  <script src="tour.js"></script> 
+
   <script>
 
     var tooltip = d3.select('body').append('div').attr('id', 'tooltip');
@@ -168,9 +172,13 @@
 
 
     });
-
-    
-
+    localStorage.removeItem('tour_current_step');
+    localStorage.removeItem('tour_end');
+    // Initialize the tour
+    tour.init();
+  
+    // Start the tour
+    tour.start();
 
 
   </script>
