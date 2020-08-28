@@ -18,7 +18,7 @@ var tour = new Tour({
     {
       element: "#plot2",
       title: "Drag Selection",
-      content: "double clcik on a circle to show the name  <br> \
+      content: "Clik on a circle to show the name  <br> \
       double clcik again to remove the name",
     },
 
