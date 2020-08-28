@@ -87,8 +87,80 @@ function moveRow(row, table) {
 
 
 }
+function add_margin(inarray){
+    //find the greatest absolute number
+    let max_value = Math.max.apply(null, inarray.map(Math.abs));
+    //and increase 1% margins
+    console.log('adjusting margins');
+    //
+    if (inarray[0]==0 && inarray[1]>0){
+        inarray[0] = inarray[0] - (max_value*0.01);
+        inarray[1] = inarray[1] + (max_value*0.01);
+        console.log('first item 0, second item >0');
+        return inarray;
+    }
 
+    if (inarray[0]==0 && inarray[1]<0){
+        inarray[0] = inarray[0] + (max_value*0.01);
+        inarray[1] = inarray[1] - (max_value*0.01);
+        console.log('first item 0, second item <0');
+        return inarray;
+    }
 
+    if (inarray[1]==0 && inarray[0]>0){
+        inarray[1] = inarray[1] - (max_value*0.01);
+        inarray[0] = inarray[0] + (max_value*0.01);
+        console.log('second item 0, first item <0');
+        return inarray;
+    }
+
+    if (inarray[1]==0 && inarray[0]<0){
+        inarray[1] = inarray[1] + (max_value*0.01);
+        inarray[0] = inarray[0] - (max_value*0.01);
+        console.log('second item 0, first item <0');
+        return inarray;
+    }
+
+    if (inarray[0]>0 && inarray[1]>0){
+        if (inarray[0] < inarray[1] ) {
+            inarray[0] = inarray[0] - (max_value*0.01)
+            inarray[1] = inarray[1] + (max_value*0.01)
+            console.log('both > 0');
+            return inarray;
+        }
+    }
+
+    if (inarray[0]<0 && inarray[1]<0){
+        if  (inarray[0] > inarray[1]){
+            inarray[0] = inarray[0] + (max_value*0.01)
+            inarray[1] = inarray[1] - (max_value*0.01)
+            console.log('both < 0');
+            return inarray;
+        }
+
+    }
+
+    if (inarray[0]<0 && inarray[1]>0){
+        
+        inarray[0] = inarray[0] - (max_value*0.01)
+        inarray[1] = inarray[1] + (max_value*0.01)
+        console.log('second item >0, first item <0');
+        return inarray;
+        
+
+    }
+
+    if (inarray[0]>0 && inarray[1]<0){
+        
+        inarray[0] = inarray[0] + (max_value*0.01)
+        inarray[1] = inarray[1] - (max_value*0.01)
+        console.log('second item <0, first item >0');
+        return inarray;
+        
+
+    }
+
+}
 
 
 //function to make a scatterplot
@@ -116,8 +188,13 @@ function moveRow(row, table) {
 
 //d3 read everithing as text, parseFloat is used to make sure to 
 //pass numbers to the plot
-function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_col, intable){
-
+function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_col, intable, filp_Y){
+    //data: out of d3.csv/tsv 
+    //selection: id of a svg (<svg id="plot1"></svg>) placeholder
+    //unique_id: a tag to isolate multiple plots
+    //x_col, y_col: columns to use for the input file
+    //intable: datatable object
+    //filp_Y: reverse Y axis,useful for FDR that goes from 1 (bad) to 0 (good)
     let margin = {
       top: 30,
       right: 20,
@@ -128,8 +205,12 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     var height = in_height - margin.top - margin.bottom;
 
     let x = d3.scaleLinear().range([0, width]).nice();
-    let y = d3.scaleLinear().range([height, 0]);
+    var y = d3.scaleLinear().range([height, 0]);
+    if (filp_Y){
+        y = d3.scaleLinear().range([0,height]);
+    }
 
+    
     let xAxis = d3.axisBottom(x).ticks(10);
     let yAxis = d3.axisLeft(y).ticks(10);
 
@@ -173,37 +254,11 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     console.log('before: xExtent',xExtent,'yExtent',yExtent);
     //var XextentMax = Math.max.apply(null, xExtent.map(Math.abs));
     //var YextentMax = Math.max.apply(null, yExtent.map(Math.abs));
+    console.log('parse x');
+    xExtent = add_margin(xExtent);
+    console.log('parse y');
+    yExtent = add_margin(yExtent);
     
-    if (xExtent[0] < 0){
-        xExtent[0] = xExtent[0] - (xExtent[0]*0.05*-1)
-    }
-    else {
-        xExtent[0] = xExtent[0] + xExtent[0]*0.05
-    }
-
-    if (xExtent[1] < 0){
-        xExtent[1] = xExtent[1] - (xExtent[1]*0.05*-1)
-    }
-    else {
-        xExtent[1] = xExtent[1] + xExtent[1]*0.05
-    }
-
-
-    if (yExtent[0] < 0){
-        yExtent[0] = yExtent[0] - (yExtent[0]*0.05*-1)
-    }
-    else {
-        yExtent[0] = yExtent[0] + yExtent[0]*0.05
-    }
-
-    if (yExtent[1] < 0){
-        yExtent[1] = yExtent[1] - (yExtent[1]*0.05*-1)
-    }
-    else {
-        yExtent[1] = yExtent[1] + yExtent[1]*0.05
-    }
-
-
     console.log('after: xExtent',xExtent,'yExtent',yExtent);
 
     x.domain(xExtent).nice();
@@ -383,11 +438,14 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                     selected.push(element.id);
                 }
             });
+            
 
             //use a regex to find all the nodes in the datatable
             intable.columns( 0 ).search(selected.join('|'),true,false).draw();
             x.domain([s[0][0], s[1][0]].map(x.invert, x));
-            y.domain([s[1][1], s[0][1]].map(y.invert, y));
+            if (filp_Y){y.domain([s[0][1], s[1][1]].map(y.invert, y));}
+            else{y.domain([s[1][1], s[0][1]].map(y.invert, y));}
+            
             scatter.select(".brush").call(brush.move, null);
         }
         zoom();

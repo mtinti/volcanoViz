@@ -140,8 +140,8 @@
       );
       
       //add the plots
-      scaterPlot(files[0], "plot1", 500, 350, "plot_a", X1, Y1, table);
-      scaterPlot(files[0], "plot2", 500, 350, "plot_b", X2, Y2, table);
+      scaterPlot(files[0], "plot1", 500, 350, "plot_a", X1, Y1, table, false);
+      scaterPlot(files[0], "plot2", 500, 350, "plot_b", X2, Y2, table, false);
       
       //add the listner to the table rows
       $('#table tbody').on('mouseover', 'tr', function () {
@@ -172,13 +172,16 @@
 
 
     });
-    localStorage.removeItem('tour_current_step');
-    localStorage.removeItem('tour_end');
-    // Initialize the tour
-    tour.init();
+    $( document ).ready(function() {
+      localStorage.removeItem('tour_current_step');
+      localStorage.removeItem('tour_end');
+      // Initialize the tour
+      tour.init();
   
-    // Start the tour
-    tour.start();
+      // Start the tour
+      tour.start();
+    });
+
 
 
   </script>
