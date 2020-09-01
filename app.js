@@ -90,80 +90,7 @@ function moveRow(row, table) {
 
 
 }
-function add_margin(inarray) {
-    //find the greatest absolute number
-    let max_value = Math.max.apply(null, inarray.map(Math.abs));
-    //and increase 1% margins
-    console.log('adjusting margins');
-    //
-    if (inarray[0] == 0 && inarray[1] > 0) {
-        inarray[0] = inarray[0] - (max_value * 0.01);
-        inarray[1] = inarray[1] + (max_value * 0.01);
-        console.log('first item 0, second item >0');
-        return inarray;
-    }
 
-    if (inarray[0] == 0 && inarray[1] < 0) {
-        inarray[0] = inarray[0] + (max_value * 0.01);
-        inarray[1] = inarray[1] - (max_value * 0.01);
-        console.log('first item 0, second item <0');
-        return inarray;
-    }
-
-    if (inarray[1] == 0 && inarray[0] > 0) {
-        inarray[1] = inarray[1] - (max_value * 0.01);
-        inarray[0] = inarray[0] + (max_value * 0.01);
-        console.log('second item 0, first item <0');
-        return inarray;
-    }
-
-    if (inarray[1] == 0 && inarray[0] < 0) {
-        inarray[1] = inarray[1] + (max_value * 0.01);
-        inarray[0] = inarray[0] - (max_value * 0.01);
-        console.log('second item 0, first item <0');
-        return inarray;
-    }
-
-    if (inarray[0] > 0 && inarray[1] > 0) {
-        if (inarray[0] < inarray[1]) {
-            inarray[0] = inarray[0] - (max_value * 0.01)
-            inarray[1] = inarray[1] + (max_value * 0.01)
-            console.log('both > 0');
-            return inarray;
-        }
-    }
-
-    if (inarray[0] < 0 && inarray[1] < 0) {
-        if (inarray[0] > inarray[1]) {
-            inarray[0] = inarray[0] + (max_value * 0.01)
-            inarray[1] = inarray[1] - (max_value * 0.01)
-            console.log('both < 0');
-            return inarray;
-        }
-
-    }
-
-    if (inarray[0] < 0 && inarray[1] > 0) {
-
-        inarray[0] = inarray[0] - (max_value * 0.01)
-        inarray[1] = inarray[1] + (max_value * 0.01)
-        console.log('second item >0, first item <0');
-        return inarray;
-
-
-    }
-
-    if (inarray[0] > 0 && inarray[1] < 0) {
-
-        inarray[0] = inarray[0] + (max_value * 0.01)
-        inarray[1] = inarray[1] - (max_value * 0.01)
-        console.log('second item <0, first item >0');
-        return inarray;
-
-
-    }
-
-}
 
 
 //function to make a scatterplot
@@ -396,15 +323,35 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 console.log(selection);
                 //this part would add the gene name to the circle
                 //buth needs to respond to brush as well... another time
+                //for the moment get removed after brushing
+
+                
+                var more_text = '<div style="z-index:-1; \
+                id="mydiv"><div id="mydivheader">Click here \
+                to move</div><p>Move</p><p>this</p><p>DIV</p></div>'
+                console.log('more_text',more_text);
+
+                
                 let gene_name =svg.append("text").attr("x", x(d[x_col]))
                 .attr("y", y(d[y_col])-10)
                 .attr("id", 'gene-label-' +unique_id+ d['Gene_acc'])
                 .style("text-anchor", "middle")
                 .attr("class","gene_name")
-                .text(d['Gene_id']);
+                .html(d['Gene_id']);//
+                
+                
+
+
+                //d3.select("#"+'gene-label-' +unique_id+ d['Gene_acc'])
+                
+                //.call(d3.drag()
+                //.on("start", dragstarted)
+                //.on("drag", dragged)
+                //.on("end", dragended));
 
             }
             else {
+                //remove name if present
                 selection.remove()
             }
 
@@ -421,7 +368,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     svg.append("text")
         .style("text-anchor", "end")
         .attr("x", width)
-        .attr("y", height - 8)
+        .attr("y", height - 18)
         .text(x_col);
 
     svg.append("g")
