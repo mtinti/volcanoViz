@@ -260,8 +260,6 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         .style("fill", "#4292c6")
         .on('mouseover', d => {
 
-
-
             //this is too resource intensive for thousends of dots
             //consider to uncomments for small plots
 
@@ -284,6 +282,10 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 .style("opacity", 1)
                 .attr("stroke-width", '5')
                 .raise();
+
+            d3.selectAll("tr[id*='" + selector + "']")
+                .style("background-color", 'red')
+                .style("fill", "transparent");            
 
             tooltip.transition().duration(100).style('opacity', .9);
             tooltip.html(
@@ -311,7 +313,8 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 .style("stroke", '')
                 .style("opacity", 0.5)
                 .attr("stroke-width", '');
-
+            d3.selectAll("tr[id*='" + selector + "']")
+                .style("background-color", ''); 
             tooltip.transition()
                 .duration(400)
                 .style('opacity', 0);
