@@ -277,6 +277,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             //intable.row.add(row.data()).draw()
             //select the gene and show tooltip
             var selector = 'aa' + d['Gene_acc'] + 'aa';
+            
             d3.selectAll("circle[id*='" + selector + "']")
                 .style("stroke", 'red')
                 .style("opacity", 1)
