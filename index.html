@@ -240,6 +240,7 @@
                 .style("stroke", '')
                 .style("opacity", 0.5)
                 .attr("stroke-width", '');
+          table.search('').columns().search('').draw();
         
         });  
 
@@ -271,7 +272,7 @@
         var selector = '#'+gene_acc;
         d3.selectAll(selector).style("stroke",'').attr("stroke-width",'').style("opacity", 0.5);
         //console.log('data[0]', data);
-        table.search('').columns().search('').draw();
+        //table.search('').columns().search('').draw();
       });
 
 
