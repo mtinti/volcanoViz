@@ -33,7 +33,13 @@ var tour = new Tour({
         element: "#table_filter",
         title: "Search Table",
         content: "Search with gene id or description"
+    },
+    {
+      element: "#textAreaIDs",
+      title: "Search Multiple IDs",
+      content: "You can input several protein IDs at the same time to visualise in the table and plots"
     }
+
 
 
   ]});
