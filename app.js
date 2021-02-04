@@ -1,3 +1,7 @@
+
+
+
+
 //this function try to parse a string as a number
 //round to two decimal
 //if fail, return the original string
@@ -128,8 +132,8 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     let margin = {
         top: 30,
         right: 20,
-        bottom: 30,
-        left: 30
+        bottom: 80,
+        left: 80
     };
 
     var width = in_width - margin.left - margin.right;
@@ -372,7 +376,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
     svg.append("text")
         .style("text-anchor", "end")
         .attr("x", width)
-        .attr("y", height - 18)
+        .attr("y", height + 40)
         .text(x_col);
     
     
@@ -384,7 +388,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 6)
+        .attr("y", -50)
         .attr("dy", "1em")
         .style("text-anchor", "end")
         .text(y_col);
