@@ -436,6 +436,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             d3.selectAll("text[id*='" + 'gene-label-' +unique_id + "']").attr('visibility','hidden');
 
             //use a regex to find all the nodes in the datatable
+            //console.log(selected.join('|'));
             intable.columns(0).search(selected.join('|'), true, false).draw();
             x.domain([s[0][0], s[1][0]].map(x.invert, x));
             if (filp_Y) { y.domain([s[0][1], s[1][1]].map(y.invert, y)); }

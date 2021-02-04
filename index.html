@@ -41,8 +41,24 @@
 
       <div class="col-md-6">
 
-        <img class="img-responsive" style="width: 100%" 
-        id="theImg" src="ANTI-INFECTIVES-RGB_200pc.png" />
+        <div class="d-flex flex-row">
+        <div class="col-md-4">
+          <form id="my-form">
+              <div class="form-outline">
+                <textarea class="form-control" id="textAreaIDs" rows="8" style="font-size:12px;"></textarea>
+                <label class="form-label" for="textAreaIDs">Select Multiple IDs</label>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+                <button type="reset" class="btn btn-primary" >Reset</button>
+              </div>
+          </form>
+       </div>
+
+        <div class="col-md-8">
+          <img class="img-responsive" style="width: 100%" 
+          id="theImg" src="ANTI-INFECTIVES-RGB_200pc.png" />
+        </div>
+        </div>
+
 
       </div>
 
@@ -144,6 +160,71 @@
         }
       );
       
+
+      $(function() {
+
+        //sanitaize string
+        //https://stackoverflow.com/questions/4562756/replacing-tab-characters-in-javascript
+        function removeNewlines(str) {
+          //remove line breaks from str
+          str = str.replace(/\s{2,}/g, ' ');
+          str = str.replace(/\t/g, ' ');
+          str = str.toString().trim().replace(/(\r\n|\n|\r)/g," ");
+          return str
+        }
+
+
+        $('#my-form').on("submit", function(e) {
+          e.preventDefault(); // cancel the actual submit and page reload
+          /* do what you want with the form */
+          
+          // Should be triggered on form submit
+          //console.log('hi');
+          var content = document.getElementById("textAreaIDs").value;
+          content =  removeNewlines(content).split(" ") 
+          console.log( content  );
+
+          //select all the rows with the submitted protein ids
+          var selectedRows = table.rows( function ( idx, data, node ) {
+            //console.log('data[1]',data[1]);
+            //console.log('content.indexOf(data[1])',content.indexOf(data[1]))
+            return content.indexOf(data[1]) > -1 ? true : false;
+          } ).data();
+          console.log(selectedRows);
+
+          //select the unique protein ids for each rro
+          var selectedIDs = [];
+          for (i = 0; i < selectedRows.length; i++){selectedIDs.push(selectedRows[i][0])}
+          console.log(selectedIDs);
+          
+          //serch the ids in the table
+          table.columns(0).search(selectedIDs.join('|'), true, false).draw();
+
+          for (i = 0; i < selectedIDs.length; i++){
+            d3.selectAll("circle[id*='" + selectedIDs[i] + "']")
+                .style("stroke", 'red')
+                .style("opacity", 1)
+                .attr("stroke-width", '5')
+                .raise();
+          }
+          
+        });
+
+
+        });
+
+
+      $('#my-form').on("reset", function(e) {
+          //e.preventDefault();
+          console.log('reset');
+          d3.selectAll("circle")
+                .style("stroke", '')
+                .style("opacity", 0.5)
+                .attr("stroke-width", '');
+        
+        });  
+
+
       //add the plots
       scaterPlot(files[0], "plot1", 500, 350, "plot_a", X1, Y1, table, false);
       scaterPlot(files[0], "plot2", 500, 350, "plot_b", X2, Y2, table, false);
@@ -171,6 +252,7 @@
         var selector = '#'+gene_acc;
         d3.selectAll(selector).style("stroke",'').attr("stroke-width",'').style("opacity", 0.5);
         //console.log('data[0]', data);
+        table.search('').columns().search('').draw();
       });
 
 
@@ -178,6 +260,9 @@
 
     });
     $( document ).ready(function() {
+
+
+
       localStorage.removeItem('tour_current_step');
       localStorage.removeItem('tour_end');
       // Initialize the tour
