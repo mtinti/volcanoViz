@@ -18,6 +18,7 @@
 
   <div class="container">
     <div class="row">
+      <h1>Project Title</h1>
     </div>
 
 
@@ -47,38 +48,35 @@
     </div>
 
     <div class="row">
+      <div class="col-md-1">
 
-      <div class="col-md-8">
+      </div>
+
+      <div class="col-md-9">
 
         <table id='table' class="display compact"></table>
 
       </div>
 
-      <div class="col-md-4">
-
+      <div class="col-md-2">
         <div class="d-flex flex-row">
+
+
           
-          <div class="col-md-1">
-          </div>
+            <form id="my-form">
+                <div class="form-outline">
+                  <textarea class="form-control" id="textAreaIDs" rows="8" style="font-size:12px;"></textarea>
+                  <label class="form-label" for="textAreaIDs">Select Multiple IDs</label>
+                  <br>
+                  <button type="submit" class="btn btn-primary" >Submit</button>
+                  <button type="reset" class="btn btn-primary" >Reset</button>
+                </div>
+            </form>
+          
+        
 
-        <div class="col-md-8">
-          <form id="my-form">
-              <div class="form-outline">
-                <textarea class="form-control" id="textAreaIDs" rows="8" style="font-size:12px;"></textarea>
-                <label class="form-label" for="textAreaIDs">Select Multiple IDs</label>
-                <br>
-                <button type="submit" class="btn btn-primary" >Submit</button>
-                <button type="reset" class="btn btn-primary" >Reset</button>
-              </div>
-          </form>
-       </div>
-
-        <div class="col-md-3">
 
         </div>
-        </div>
-
-
       </div>
 
     </div>
@@ -110,18 +108,15 @@
   <script src="app.js"></script>
   <script src="tour.js"></script> 
   <script src="https://d3js.org/d3-drag.v2.min.js"></script>
-  
+  <script src="config.js"></script> 
   <script>
 
     
 
     var tooltip = d3.select('body').append('div').attr('id', 'tooltip');
 
-    //select the columns to plot
-    let X1='logFC';
-    let Y1='log_PValue';
-    let X2='logCPM';
-    let Y2='logFC'; 
+    
+    
 
     Promise.all([d3.csv('indata.csv')]).then(function(files) {
       
@@ -244,10 +239,10 @@
         
         });  
 
-
+      //select the columns to plot from config file
       //add the plots
-      scaterPlot(files[0], "plot1", 500, 350, "plot_a", X1, Y1, table, false);
-      scaterPlot(files[0], "plot2", 500, 350, "plot_b", X2, Y2, table, false);
+      scaterPlot(files[0], "plot1", PLOT_WIDTH, PLOT_HEIGHT, "plot_a", X1, Y1, table, FLIP_Y1);
+      scaterPlot(files[0], "plot2", PLOT_WIDTH, PLOT_HEIGHT, "plot_b", X2, Y2, table, FLIP_Y2);
       
       //add the listner to the table rows
       $('#table tbody').on('mouseover', 'tr', function () {
