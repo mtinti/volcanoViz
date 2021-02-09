@@ -283,13 +283,13 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             var selector = 'aa' + d['Gene_acc'] + 'aa';
 
             d3.selectAll("circle[id*='" + selector + "']")
-                .style("stroke", 'red')
+                //.style("stroke", 'red')
                 .style("opacity", 1)
                 .attr("stroke-width", '5')
                 .raise();
 
             d3.selectAll("tr[id*='" + selector + "']")
-                .style("background-color", 'red')
+                //.style("background-color", 'red')
                 .style("fill", "transparent");            
 
             tooltip.transition().duration(100).style('opacity', .9);
@@ -315,11 +315,11 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
 
             var selector = 'aa' + d['Gene_acc'] + 'aa';
             d3.selectAll("circle[id*='" + selector + "']")
-                .style("stroke", '')
-                .style("opacity", 0.5)
-                .attr("stroke-width", '');
-            d3.selectAll("tr[id*='" + selector + "']")
-                .style("background-color", ''); 
+                //.style("stroke", '')
+                .style("opacity", 0.5);
+                //.attr("stroke-width", '');
+            //d3.selectAll("tr[id*='" + selector + "']")
+                //.style("background-color", ''); 
             tooltip.transition()
                 .duration(400)
                 .style('opacity', 0);
@@ -334,10 +334,21 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 //for the moment get removed after brushing
 
                 
-                var more_text = '<div style="z-index:-1; \
-                id="mydiv"><div id="mydivheader">Click here \
-                to move</div><p>Move</p><p>this</p><p>DIV</p></div>'
-                console.log('more_text',more_text);
+                //var more_text = '<div style="z-index:-1; \
+                //id="mydiv"><div id="mydivheader">Click here \
+                //to move</div><p>Move</p><p>this</p><p>DIV</p></div>'
+                //console.log('more_text',more_text);
+
+
+                var selector = 'aa' + d['Gene_acc'] + 'aa';
+                d3.selectAll("circle[id*='" + selector + "']")
+                    .style("stroke", 'red')
+                    .style("opacity", 1)
+                    .attr("stroke-width", '5')
+                    .raise();
+                d3.selectAll("tr[id*='" + selector + "']")
+                    .style("background-color", 'red')
+                    .style("fill", "transparent"); 
 
                 
 
@@ -350,6 +361,18 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 
                 
 
+                function dragged(event, d) {
+                    console.log('im dragging');
+                }
+                
+                drag_this('#gene-label-' +unique_id+ d['Gene_acc']);
+
+                
+
+
+
+
+                //d3.selectAll(".gene_name").call(d3.drag().on("start", dragged));
 
                 //d3.select("#"+'gene-label-' +unique_id+ d['Gene_acc'])
                 
@@ -362,6 +385,16 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             else {
                 //remove name if present
                 selection.remove()
+
+                var selector = 'aa' + d['Gene_acc'] + 'aa';
+                d3.selectAll("circle[id*='" + selector + "']")
+                    .style("stroke", '')
+                    .style("opacity", 0.5)
+                    .attr("stroke-width", '');
+                d3.selectAll("tr[id*='" + selector + "']")
+                    .style("background-color", ''); 
+
+
             }
 
 
