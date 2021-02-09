@@ -17,36 +17,53 @@
   <main role="main">
 
   <div class="container">
-    <div class="row">
-      <h1>Project Title</h1>
-    </div>
+
 
 
 
     <div class="row">
-        <div class="col-md-2">
-        </div>
+      <div class="col-md-2">
+      </div>
 
-        <div class="col-md-8 d-flex flex-row">
-          <img class="img-responsive" style="width: 100%" 
+      <div class="col-md-8 d-flex flex-row">
+
+        <img class="img-responsive" style="width: 100%" 
           id="theImg" src="uod-wcair-full.png" />
-        </div>
+      </div>
+      
         
-        <div class="col-md-2">
-        </div>
+      <div class="col-md-2">
+      </div>
 
-      </div>  
+    </div>  
+
+    <div class="row">
+
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8 d-flex flex-row">
+        <h1 id='page_title'>Project Title</h1>
+      </div>
+
+      <div class="col-md-2">
+      </div>
+
+    </div>
     
     
     <div class="row">
+
       <div class="col-md-6">
-        <svg id="plot2"></svg>
         <button type="submit" class="btn btn-primary" onclick="save_as_svg('plot2');">Download Plot</button>
+        <svg id="plot2"></svg>
+        
       </div>
       
       <div class="col-md-6">
-        <svg id="plot1"></svg>
         <button type="submit" class="btn btn-primary" onclick="save_as_svg('plot1');">Download Plot</button>
+        <svg id="plot1"></svg>
+        
       </div>
       
     </div>
@@ -113,6 +130,16 @@
   <script type="text/javascript" src="JS/external/d3-drag.v2.min.js"></script>
   <script type="text/javascript" src="JS/FileSaver.min.js"></script>
   <script>
+
+
+    function quotation(id, text) {
+        var q = document.getElementById(id);
+        if (q) q.innerHTML = text;
+      }
+      
+
+      
+
     function save_as_svg(svg_id){
         var svg_data = document.getElementById(svg_id).innerHTML //put id of your svg element here
         var head = '<svg title="graph" version="1.1" xmlns="http://www.w3.org/2000/svg">'
@@ -293,7 +320,7 @@
     });
     $( document ).ready(function() {
 
-
+      quotation('page_title', PROJECT_TITLE);
 
       localStorage.removeItem('tour_current_step');
       localStorage.removeItem('tour_end');

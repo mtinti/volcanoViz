@@ -8,3 +8,5 @@ let FLIP_Y2=false;
 
 let PLOT_WIDTH=600;
 let PLOT_HEIGHT=400;
+
+let PROJECT_TITLE='Cryptosporidium  Oocyst Proteome';
