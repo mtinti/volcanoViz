@@ -340,12 +340,13 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                 console.log('more_text',more_text);
 
                 
+
                 let gene_name =svg.append("text").attr("x", x(d[x_col]))
                 .attr("y", y(d[y_col])-10)
                 .attr("id", 'gene-label-' +unique_id+ d['Gene_acc'])
                 .style("text-anchor", "middle")
                 .attr("class","gene_name")
-                .html(d['Gene_id']);//
+                .html( prompt("Please enter name to display", d['Gene_id']) );//
                 
                 
 
