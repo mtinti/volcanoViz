@@ -325,7 +325,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             tooltip.transition()
                 .duration(400)
                 .style('opacity', 0);
-                
+
         }).on('click', d => {
 
             var selection = d3.select("#" + 'gene-label-' +unique_id+ d['Gene_acc'])
@@ -354,16 +354,33 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                     .style("fill", "transparent"); 
 
                 
+                //var selector = 'aa' + d['Gene_acc'] + 'aa';
 
+                function doSomething(selector, d) {
+                    var input;
+                    input = prompt("Please enter name to display", d['Gene_id']);
+                    if (input === null) {
+
+                        d3.selectAll("circle[id*='" + selector + "']")
+                        .style("stroke", '')
+                        .style("opacity", 0.5)
+                        .attr("stroke-width", '');
+                        return; //break out of the function early
+
+                    }
+                    else {
+                        return input;
+                    }
+
+                }
 
                     
-
                 let gene_name =svg.append("text").attr("x", x(d[x_col]))
                 .attr("y", y(d[y_col])-10)
                 .attr("id", 'gene-label-' +unique_id+ d['Gene_acc'])
                 .style("text-anchor", "middle")
                 .attr("class","gene_name")
-                .html( prompt("Please enter name to display", d['Gene_id']) );//
+                .html( doSomething(selector,d) );//
                 
                 
 

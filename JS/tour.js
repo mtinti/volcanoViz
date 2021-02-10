@@ -1,11 +1,19 @@
 // Instance the tour
 var tour = new Tour({
     steps: [
-    {
-      element: "#aa1aa",
-      title: "Gene Highlight",
-      content: "Hovering over the dots to highlight in both plots "
-    },
+
+      {
+        element: "#aa1aa",
+        title: "Gene Highlight",
+        content: "Hovering over the dots to highlight in both plots "
+      },
+    
+      {
+        element: "#aa5aa",
+        title: "Add Label",
+        content: "Clik on a circle to add a label  <br> \
+        double clcik again to remove the label",
+      },
 
 
     {
@@ -16,12 +24,6 @@ var tour = new Tour({
       <br>Double click to reset the zoom",
     },
 
-    {
-      element: "#aa5aa",
-      title: "Drag Selection",
-      content: "Clik on a circle to add a label  <br> \
-      double clcik again to remove the label",
-    },
 
     {
         element: "#table_wrapper",
