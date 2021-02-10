@@ -2,10 +2,11 @@
 var tour = new Tour({
     steps: [
     {
-      element: "#plot2",
+      element: "#aa1aa",
       title: "Gene Highlight",
       content: "Hovering over the dots to highlight in both plots "
     },
+
 
     {
       element: "#plot2",
@@ -16,10 +17,10 @@ var tour = new Tour({
     },
 
     {
-      element: "#plot2",
+      element: "#aa5aa",
       title: "Drag Selection",
-      content: "Clik on a circle to show the name  <br> \
-      double clcik again to remove the name",
+      content: "Clik on a circle to add a label  <br> \
+      double clcik again to remove the label",
     },
 
     {

@@ -263,7 +263,7 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
         .attr("opacity", 0.5)
         .style("fill", "#4292c6")
         .on('mouseover', d => {
-
+            //this.setAttribute('r', '72');
             //this is too resource intensive for thousends of dots
             //consider to uncomments for small plots
 
@@ -283,13 +283,14 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             var selector = 'aa' + d['Gene_acc'] + 'aa';
 
             d3.selectAll("circle[id*='" + selector + "']")
-                //.style("stroke", 'red')
+                //.style("stroke", 'blue')
                 .style("opacity", 1)
                 .attr("stroke-width", '5')
+                .attr("r", 8)
                 .raise();
 
             d3.selectAll("tr[id*='" + selector + "']")
-                //.style("background-color", 'red')
+                .style("background-color", 'red')
                 .style("fill", "transparent");            
 
             tooltip.transition().duration(100).style('opacity', .9);
@@ -316,13 +317,15 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
             var selector = 'aa' + d['Gene_acc'] + 'aa';
             d3.selectAll("circle[id*='" + selector + "']")
                 //.style("stroke", '')
+                .attr("r", 4)
                 .style("opacity", 0.5);
                 //.attr("stroke-width", '');
-            //d3.selectAll("tr[id*='" + selector + "']")
-                //.style("background-color", ''); 
+            d3.selectAll("tr[id*='" + selector + "']")
+                .style("background-color", ''); 
             tooltip.transition()
                 .duration(400)
                 .style('opacity', 0);
+                
         }).on('click', d => {
 
             var selection = d3.select("#" + 'gene-label-' +unique_id+ d['Gene_acc'])
@@ -351,6 +354,9 @@ function scaterPlot(data, selection, in_width, in_height, unique_id, x_col, y_co
                     .style("fill", "transparent"); 
 
                 
+
+
+                    
 
                 let gene_name =svg.append("text").attr("x", x(d[x_col]))
                 .attr("y", y(d[y_col])-10)
