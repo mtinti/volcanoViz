@@ -55,7 +55,7 @@
     <div class="row" id='plot_row'>
 
       <div class="col-md-6">
-        <button type="submit" class="btn btn-primary" onclick="save_as_svg('plot2');">Download Plot</button>
+        <button id='button_2' type="submit" class="btn btn-primary" onclick="save_as_svg('plot2');">Download Plot</button>
         <svg id="plot2"></svg>
         
       </div>
@@ -139,7 +139,9 @@
         if (q) q.innerHTML = text;
       }
       
-
+    //function run_joke () {
+    //    document.body.style.setProperty("-webkit-transform", "rotate(-180deg)", null);
+    //}
       
 
     function save_as_svg(svg_id){
@@ -324,6 +326,8 @@
     $( document ).ready(function() {
 
       quotation('page_title', PROJECT_TITLE);
+
+
 
       localStorage.removeItem('tour_current_step');
       localStorage.removeItem('tour_end');

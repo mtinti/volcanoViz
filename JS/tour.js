@@ -2,10 +2,21 @@
 var tour = new Tour({
     steps: [
 
+
+
+
+      {
+        element: "#theImg",
+        title: "Data Visualization App",
+        content: "This little tour will show you some of the functionalities of this website"
+      },
+
+
+
       {
         element: "#aa1aa",
         title: "Gene Highlight",
-        content: "Hovering over the dots to highlight in both plots "
+        content: "Hovering over the dots to highlight in both plots"
       },
     
       {
@@ -37,12 +48,25 @@ var tour = new Tour({
         title: "Search Table",
         content: "Search with gene id or description"
     },
+
+
     {
       element: "#textAreaIDs",
       title: "Search Multiple IDs",
       content: "You can input several protein IDs at the same time to visualise in the table and plots"
-    }
+    },
 
+    {
+      element: "#button_2",
+      title: "Ssve/Download the image",
+      content: "Click on this button to save the plot as an SVG file"
+    },
 
+    //{
+    //  element: "#theImg",
+    //  title: "<h3>WELL DONE!!!<h3>",
+    //  content: "you won a spacial prize for following this tour to the end!<br>\
+    //  <button id='button_3' type='submit' class='btn btn-primary' onclick='run_joke();'>Redeem</button>"
+    //},
 
   ]});
